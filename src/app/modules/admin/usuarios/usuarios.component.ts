@@ -10,9 +10,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { AreaFormComponent } from 'app/modals/area-form/area-form.component';
 import { UsuarioFormComponent } from 'app/modals/usuario-form/usuario-form.component';
-import { AreaService } from 'app/services/admin/area.service';
 import { OrganizacionService } from 'app/services/admin/organizacion.service';
 import { UsuarioService } from 'app/services/admin/usuario.service';
 import { forkJoin } from 'rxjs';
@@ -50,7 +48,6 @@ export class UsuariosComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private areaService: AreaService,
     private organizacionService: OrganizacionService,
     private usuarioService: UsuarioService,
     private alertService: AlertService
