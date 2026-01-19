@@ -103,7 +103,7 @@ export class OrganizacionesComponent {
   }
 
   activar(item){
-    this.organizacionService.Reactivar(item.id)
+    this.organizacionService.Activar(item.id)
     .subscribe({
       next: (response) => {
         this.loadData();
