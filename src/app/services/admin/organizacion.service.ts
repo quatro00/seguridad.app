@@ -8,7 +8,7 @@ import { environment } from 'environments/environment';
 })
 export class OrganizacionService {
 
-  service:string = 'administrador/organizacion';
+  service:string = 'admin/organizacion';
 
 
   constructor(private http:HttpClient) { }

@@ -46,13 +46,6 @@ export const defaultNavigation_admin: FuseNavigationItem[] = [
         link : '/admin/tickets-abiertos'
     },
 
-    {
-        id   : 'ticketDetalle',
-        title: 'Ticket detalle',
-        type : 'basic',
-        icon : 'heroicons_outline:ticket',
-        link : '/admin/ticket-detalle'
-    },
 
 
     {
