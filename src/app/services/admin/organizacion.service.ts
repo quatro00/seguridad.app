@@ -8,13 +8,18 @@ import { environment } from 'environments/environment';
 })
 export class OrganizacionService {
 
-  service:string = 'admin/organizacion';
+  service:string = 'administrador/organizacion';
 
 
   constructor(private http:HttpClient) { }
 
+  Crear(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiUrl}/${this.service}`,request);
+  }
+
   GetAll():Observable<any>{
     let params = new HttpParams();
+console.log(`${environment.apiUrl}/${this.service}`);
     return this.http.get<any>(`${environment.apiUrl}/${this.service}`);
   }
 
@@ -22,21 +27,15 @@ export class OrganizacionService {
     return this.http.get<any>(`${environment.apiUrl}/${this.service}/${id}`);
   }
 
-  Update(id:string, request:any):Observable<any>{
-    return this.http.put<any>(`${environment.apiUrl}/${this.service}/${id}`,request);
-  }
-
-  Crear(request:any):Observable<any>{
-    return this.http.post<any>(`${environment.apiUrl}/${this.service}`,request);
-  }
-
   Desactivar(id:any):Observable<any>{
     return this.http.put<any>(`${environment.apiUrl}/${this.service}/${id}/desactivar`,{});
   }
 
-  Activar(id:any):Observable<any>{
+  Reactivar(id:any):Observable<any>{
     return this.http.put<any>(`${environment.apiUrl}/${this.service}/${id}/activar`,{});
   }
-  
+  Update(id:string, request:any):Observable<any>{
+    return this.http.put<any>(`${environment.apiUrl}/${this.service}/${id}`,request);
+  }
 
 }
