@@ -11,27 +11,71 @@ export const defaultNavigation_admin: FuseNavigationItem[] = [
         link : '/admin/home'
     },
     {
-        id   : 'sistemas',
-        title: 'Sistemas',
+        id   : 'organizaciones',
+        title: 'Organizaciones',
         type : 'basic',
         icon : 'heroicons_outline:building-office',
-        link : '/admin/sistemas'
+        link : '/admin/organizaciones'
+    },
+    {
+        id   : 'area',
+        title: 'Area',
+        type : 'basic',
+        icon : 'heroicons_outline:rectangle-stack',
+        link : '/admin/areas'
+    },
+    {
+        id   : 'subarea',
+        title: 'Sub area',
+        type : 'basic',
+        icon : 'heroicons_outline:squares-2x2',
+        link : '/admin/subareas'
+    },
+    {
+        id   : 'equiposDeTrabajo',
+        title: 'Equipos de trabajo',
+        type : 'basic',
+        icon : 'heroicons_outline:wrench',
+        link : '/admin/equipos-de-trabajo'
+    },
+    {
+        id   : 'ticketsAbiertos',
+        title: 'Tickets abiertos',
+        type : 'basic',
+        icon : 'heroicons_outline:ticket',
+        link : '/admin/tickets-abiertos'
+    },
+
+    {
+        id   : 'ticketDetalle',
+        title: 'Ticket detalle',
+        type : 'basic',
+        icon : 'heroicons_outline:ticket',
+        link : '/admin/ticket-detalle'
+    },
+
+
+    {
+        id   : 'nuevo-ticket',
+        title: 'Nuevo ticket',
+        type : 'basic',
+        icon : 'heroicons_outline:plus-circle',
+        link : '/admin/nuevo-ticket'
     },
     {
         id   : 'usuarios',
         title: 'Usuarios',
         type : 'basic',
-        icon : 'heroicons_outline:squares-2x2',
+        icon : 'heroicons_outline:users',
         link : '/admin/usuarios'
     },
     {
-        id   : 'organizaciones',
-        title: 'Organizaciones',
+        id   : 'configuracion',
+        title: 'Configuracion',
         type : 'basic',
-        icon : 'heroicons_outline:wrench',
-        link : '/admin/organizaciones'
-    },
-    
+        icon : 'heroicons_outline:cog-6-tooth',
+        link : '/admin/configuracion'
+    }
 ];
 export const compactNavigation_admin: FuseNavigationItem[] = [
     {

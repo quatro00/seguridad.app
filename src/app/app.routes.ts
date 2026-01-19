@@ -74,7 +74,7 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         children: [
-            //{ path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes') },
+            { path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes') },
         ]
     },
     {
@@ -88,7 +88,43 @@ export const appRoutes: Route[] = [
         children: [
             { path: 'home', loadChildren: () => import('app/modules/admin/home/home.route') },
             { path: 'organizaciones', loadChildren: () => import('app/modules/admin/organizaciones/organizaciones.route') },
+            { path: 'areas', loadChildren: () => import('app/modules/admin/areas/areas.route') },
             { path: 'usuarios', loadChildren: () => import('app/modules/admin/usuarios/usuarios.route') },
+            { path: 'subareas', loadChildren: () => import('app/modules/admin/subareas/subareas.route') },
+            { path: 'nuevo-ticket', loadChildren: () => import('app/modules/admin/nuevo-ticket/nuevo-ticket.route') },
+            { path: 'tickets-abiertos', loadChildren: () => import('app/modules/admin/tickets/tickets.route') },
+            { path: 'ticket-detalle/:id', loadChildren: () => import('app/modules/admin/ticket-detalle/ticket-detalle.route') },
+            { path: 'equipos-de-trabajo', loadChildren: () => import('app/modules/admin/equipos-de-trabajo/equipos-de-trabajo.route') },
         ]
-    }
+    },
+    {
+        path: 'responsable',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: initialDataResolver
+        },
+        children: [
+            { path: 'home', loadChildren: () => import('app/modules/responsable/home/home.route')},
+            { path: 'nuevo-ticket', loadChildren: () => import('app/modules/responsable/registrar-ticket/registrar-ticket.route')},
+            { path: 'tickets-abiertos', loadChildren: () => import('app/modules/responsable/tickets-abiertos/tickets-abiertos.route')},
+            { path: 'ticket-detalle/:id', loadChildren: () => import('app/modules/responsable/ticket-detalle/ticket-detalle.route') },
+        ]
+    },
+    {
+        path: 'supervisor',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: initialDataResolver
+        },
+        children: [
+            { path: 'home', loadChildren: () => import('app/modules/supervisor/home/home.route')},
+            { path: 'tickets-por-asignar', loadChildren: () => import('app/modules/supervisor/tickets-por-asignar/tickets-por-asignar.route')},
+            { path: 'tickets-asignados', loadChildren: () => import('app/modules/supervisor/tickets-asignados/tickets-asignados.route')},
+            { path: 'ticket-detalle/:id', loadChildren: () => import('app/modules/supervisor/ticket-detalle/ticket-detalle.route') },
+        ]
+    },
 ];

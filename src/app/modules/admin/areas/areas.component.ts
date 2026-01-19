@@ -10,18 +10,18 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AreaFormComponent } from 'app/modals/area-form/area-form.component';
-import { UsuarioFormComponent } from 'app/modals/usuario-form/usuario-form.component';
+import { AsignarResponsablesComponent } from 'app/modals/asignar-responsables/asignar-responsables.component';
 import { AreaService } from 'app/services/admin/area.service';
 import { OrganizacionService } from 'app/services/admin/organizacion.service';
-import { UsuarioService } from 'app/services/admin/usuario.service';
-import { forkJoin } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
 import { AlertService } from 'app/services/alert.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-usuarios',
-   imports: [
+  selector: 'app-areas',
+  imports: [
+    MatTooltipModule,
     CommonModule,
     MatTableModule,
     MatSelectModule,
@@ -34,31 +34,28 @@ import { AlertService } from 'app/services/alert.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule],
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.scss'
+  templateUrl: './areas.component.html'
 })
-export class UsuariosComponent implements OnInit {
+export class AreasComponent implements OnInit {
   searchInputControl: UntypedFormControl = new UntypedFormControl();
   isLoading: boolean = false;
 
-  displayedColumns: string[] = ['avatar', 'username', 'nombre','apellidos','correoElectronico', 'telefono', 'organizacion', 'rol', 'activo','acciones'];
-  dataSource =  new MatTableDataSource<any>();
+  displayedColumns: string[] = ['organizacion', 'clave', 'nombre', 'responsable', 'telefono', 'activo', 'acciones'];
+  dataSource = new MatTableDataSource<any>([]);
   organizaciones: any[] = [];
-  usuarios: any[] = [];
   organizacionControl = new FormControl('0');
-
 
   constructor(
     private dialog: MatDialog,
     private areaService: AreaService,
     private organizacionService: OrganizacionService,
-    private usuarioService: UsuarioService,
-    private alertService: AlertService
+    private alertService:AlertService
   ) { }
 
   ngOnInit(): void {
-    this.loadData();
-    
+    this.loadOrganizaciones();
+    this.loadAreas();
+  
     // Filtro por input
     this.searchInputControl.valueChanges.subscribe(value => {
       console.log(1);
@@ -70,33 +67,13 @@ export class UsuariosComponent implements OnInit {
         (value + '').toLowerCase().includes(filter)
       );
     };
-  }
-
-  filtrarUsuariosPorRol(rolSeleccionado: string) {
-  if (rolSeleccionado === '0') {
-    this.dataSource.data = this.usuarios;
-  } else {
-    this.dataSource.data = this.usuarios.filter(u =>
-      u.roles.includes(rolSeleccionado)
-    );
-    console.log(this.dataSource);
-  }
-}
-
-  loadData(){
-    forkJoin([this.usuarioService.GetAll()]).subscribe({
-      next: ([usuariosResponse]) => {
-        console.log(usuariosResponse);
-        this.usuarios = usuariosResponse;
-        this.dataSource.data = usuariosResponse;
-        console.log(usuariosResponse);
-      },
-      complete: () => { },
-      error: () => {
-         this.alertService.showError('Error', 'Ocurrió un error inesperado.');
-      }
+    /*
+    this.organizacionControl.valueChanges.subscribe(() => {
+      this.loadAreas();
     });
+    */
   }
+
   loadOrganizaciones() {
 
     this.organizacionService.GetAll().subscribe((data) => {
@@ -119,50 +96,79 @@ export class UsuariosComponent implements OnInit {
     */
   }
 
+  nueva(): void {
+    const dialogRef = this.dialog.open(AreaFormComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if(result){
+          this.loadAreas();
+        }
+      }
+    });
+  }
+
   activar(item){
-    this.usuarioService.Reactivar(item.id)
+    this.areaService.Reactivar(item.id)
     .subscribe({
       next: (response) => {
-        this.loadData();
+        this.loadAreas();
       },
       complete: () => {
         //this.btnLoading = false;
       },
-      error: () => {
+      error: (err) => {
         //this.btnLoading = false;
-        this.alertService.showError('Error', 'Ocurrió un error inesperado.');
+        this.alertService.showError("Error", err.error);
       }
     })
   }
 
   desactivar(item){
-    this.usuarioService.Desactivar(item.id)
+    this.areaService.Desactivar(item.id)
     .subscribe({
       next: (response) => {
-        this.loadData();
+        this.loadAreas();
       },
       complete: () => {
         //this.btnLoading = false;
       },
-      error: () => {
+      error: (err) => {
         //this.btnLoading = false;
-        this.alertService.showError('Error', 'Ocurrió un error inesperado.');
+        this.alertService.showError("Error", err.error);
       }
     })
   }
 
-  nueva(): void {
-      const dialogRef = this.dialog.open(UsuarioFormComponent, {
-        width: '500px',
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.loadData();
-          // Aquí puedes llamar a tu servicio para guardar la nueva organización
-        }
-      });
-    }
+  asignarResponsables(area:any): void {
+    console.log(area);
+    const dialogRef = this.dialog.open(AsignarResponsablesComponent, {
+      width: '750px',
+      data: { area }
+    });
 
-  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if(result){
+          this.loadAreas();
+        }
+        //this.loadData();
+        // Aquí puedes llamar a tu servicio para guardar la nueva organización
+      }
+    });
+  }
+
+  loadAreas() {
+    //this.isLoading = true;
+    const orgId = this.organizacionControl.value;
+    this.dataSource.data = [];
+
+    this.areaService.GetAll().subscribe((data) => {
+      this.dataSource.data = data;
+      this.isLoading = false;
+      console.log(data);
+    });
+  }
 }
