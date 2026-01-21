@@ -18,42 +18,11 @@ export const defaultNavigation_admin: FuseNavigationItem[] = [
         link : '/admin/organizaciones'
     },
     {
-        id   : 'area',
-        title: 'Area',
+        id   : 'sistemas',
+        title: 'Sistemas',
         type : 'basic',
         icon : 'heroicons_outline:rectangle-stack',
-        link : '/admin/areas'
-    },
-    {
-        id   : 'subarea',
-        title: 'Sub area',
-        type : 'basic',
-        icon : 'heroicons_outline:squares-2x2',
-        link : '/admin/subareas'
-    },
-    {
-        id   : 'equiposDeTrabajo',
-        title: 'Equipos de trabajo',
-        type : 'basic',
-        icon : 'heroicons_outline:wrench',
-        link : '/admin/equipos-de-trabajo'
-    },
-    {
-        id   : 'ticketsAbiertos',
-        title: 'Tickets abiertos',
-        type : 'basic',
-        icon : 'heroicons_outline:ticket',
-        link : '/admin/tickets-abiertos'
-    },
-
-
-
-    {
-        id   : 'nuevo-ticket',
-        title: 'Nuevo ticket',
-        type : 'basic',
-        icon : 'heroicons_outline:plus-circle',
-        link : '/admin/nuevo-ticket'
+        link : '/admin/sistemas'
     },
     {
         id   : 'usuarios',
