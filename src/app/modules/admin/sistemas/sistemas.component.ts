@@ -7,70 +7,77 @@ import { MatInputModule } from '@angular/material/input';
 import { fuseAnimations } from '@fuse/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-
-
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizacionFormComponent } from 'app/modals/organizacion-form/organizacion-form.component';
 import { OrganizacionService } from 'app/services/admin/organizacion.service';
 import { CommonModule } from '@angular/common';
+import { SistemaService } from 'app/services/admin/sistema.service';
 
 @Component({
-  selector: 'app-organizaciones',
+  selector: 'app-sistemas',
   standalone: true,
-  templateUrl: './organizaciones.component.html',
+  templateUrl: './sistemas.component.html',
   imports: [
-    CommonModule,
-    MatTableModule,
-    MatSortModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatFormFieldModule,
-    MatIcon,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule],
-  styles: [
-    /* language=SCSS */
-    `
-            .inventory-grid {
-                grid-template-columns: 48px auto 40px;
+      CommonModule,
+      MatTableModule,
+      MatSortModule,
+      MatIconModule,
+      MatProgressBarModule,
+      MatFormFieldModule,
+      MatIcon,
+      FormsModule,
+      ReactiveFormsModule,
+      MatButtonModule,
+      MatInputModule],
+    styles: [
+      
+      `
+      .roles-chips mat-chip {
+    font-size: 12px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 6px;
+}
 
-                @screen sm {
-                    grid-template-columns: 48px auto 112px 72px;
-                }
-
-                @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
-                }
-
-                @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
-                }
-            }
-        `,
-  ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: fuseAnimations,
+              .inventory-grid {
+                  grid-template-columns: 48px auto 40px;
+  
+                  @screen sm {
+                      grid-template-columns: 48px auto 112px 72px;
+                  }
+  
+                  @screen md {
+                      grid-template-columns: 48px 112px auto 112px 72px;
+                  }
+  
+                  @screen lg {
+                      grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                  }
+              }
+          `,
+    ],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: fuseAnimations,
 })
-export class OrganizacionesComponent {
+export class SistemasComponent {
 
   searchInputControl: UntypedFormControl = new UntypedFormControl();
   isLoading: boolean = false;
 
-  displayedColumns: string[] = ['clave', 'nombre', 'telefono', 'direccion', 'responsable', 'activo', 'acciones'];
+  displayedColumns: string[] = ['clave', 'nombre', 'roles', 'activo', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private dialog: MatDialog,
-    private organizacionService:OrganizacionService
+    private sistemaService:SistemaService
   ) { }
 
   nuevaOrganizacion(): void {
@@ -102,7 +109,7 @@ export class OrganizacionesComponent {
   }
 
   activar(item){
-    this.organizacionService.Reactivar(item.id)
+    this.sistemaService.Reactivar(item.id)
     .subscribe({
       next: (response) => {
         this.loadData();
@@ -117,7 +124,7 @@ export class OrganizacionesComponent {
   }
 
   desactivar(item){
-    this.organizacionService.Desactivar(item.id)
+    this.sistemaService.Desactivar(item.id)
     .subscribe({
       next: (response) => {
         this.loadData();
@@ -149,7 +156,7 @@ export class OrganizacionesComponent {
 
     // Simulación de carga (reemplazar con servicio real)
     console.log(1);
-    this.organizacionService.GetAll()
+    this.sistemaService.GetAll()
     .subscribe({
           next: (response) => {
             console.log(response);
