@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResolverTicketComponent } from './resolver-ticket.component';
+import { AsignarRolesComponent } from './asignar-roles.component';
 
-describe('ResolverTicketComponent', () => {
-  let component: ResolverTicketComponent;
-  let fixture: ComponentFixture<ResolverTicketComponent>;
+describe('AsignarRolesComponent', () => {
+  let component: AsignarRolesComponent;
+  let fixture: ComponentFixture<AsignarRolesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ResolverTicketComponent]
+      imports: [AsignarRolesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ResolverTicketComponent);
+    fixture = TestBed.createComponent(AsignarRolesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

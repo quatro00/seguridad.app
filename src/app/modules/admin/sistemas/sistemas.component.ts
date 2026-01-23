@@ -13,10 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
-import { OrganizacionFormComponent } from 'app/modals/organizacion-form/organizacion-form.component';
 import { OrganizacionService } from 'app/services/admin/organizacion.service';
 import { CommonModule } from '@angular/common';
 import { SistemaService } from 'app/services/admin/sistema.service';
+import { SistemaFormComponent } from 'app/modals/sistema-form/sistema-form.component';
+import { RolService } from 'app/services/admin/rol.service';
 
 @Component({
   selector: 'app-sistemas',
@@ -72,16 +73,17 @@ export class SistemasComponent {
 
   displayedColumns: string[] = ['clave', 'nombre', 'roles', 'activo', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
-
+  roles:any[]=[];
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private dialog: MatDialog,
-    private sistemaService:SistemaService
+    private sistemaService:SistemaService,
+    private rolService: RolService
   ) { }
 
   nuevaOrganizacion(): void {
-    const dialogRef = this.dialog.open(OrganizacionFormComponent, {
+    const dialogRef = this.dialog.open(SistemaFormComponent, {
       width: '500px',
     });
 
@@ -139,7 +141,7 @@ export class SistemasComponent {
   }
 
   editar(item){
-    const dialogRef = this.dialog.open(OrganizacionFormComponent, {
+    const dialogRef = this.dialog.open(SistemaFormComponent, {
     width: '500px',
     data: item, // Le pasas los datos para editar
   });
@@ -153,9 +155,6 @@ export class SistemasComponent {
   }
   loadData(): void {
     //this.isLoading = true;
-
-    // Simulación de carga (reemplazar con servicio real)
-    console.log(1);
     this.sistemaService.GetAll()
     .subscribe({
           next: (response) => {
@@ -170,18 +169,5 @@ export class SistemasComponent {
             this.isLoading = false;
           },
         });
-
-        /*
-    setTimeout(() => {
-      this.dataSource.data = [
-        { clave: 'ORG01', nombre: 'Hospital Central', telefono: '8123456789', direccion: 'Av. Salud 123', responsable: 'Dr. Pérez', activo: true },
-        { clave: 'ORG02', nombre: 'Clínica Norte', telefono: '8187654321', direccion: 'Calle 45 Norte', responsable: 'Lic. Martínez', activo: false },
-        // ... más datos
-      ];
-
-      this.dataSource.sort = this.sort;
-      this.isLoading = false;
-    }, 800);
-    */
   }
 }

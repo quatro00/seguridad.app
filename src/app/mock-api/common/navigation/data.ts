@@ -18,6 +18,13 @@ export const defaultNavigation_admin: FuseNavigationItem[] = [
         link : '/admin/organizaciones'
     },
     {
+        id   : 'roles',
+        title: 'Roles',
+        type : 'basic',
+        icon : 'heroicons_outline:building-office',
+        link : '/admin/roles'
+    },
+    {
         id   : 'sistemas',
         title: 'Sistemas',
         type : 'basic',
